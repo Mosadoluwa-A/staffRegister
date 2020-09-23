@@ -10,8 +10,16 @@ body{
     width: 60%;
     margin: auto;
     margin-top: 10%;
-}.staffbod{
-   
+}.card-img-top{
+   width: 100%;
 }.btn-lg{
     font-size: 2.5vmin;
+}.center{
+    text-align: center;
+}.card{
+    width: 50%;
+    height: 60%;
+    margin: auto;
+}.card h5{
+    font-size: 2vmin;
 }
