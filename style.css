@@ -6,12 +6,12 @@ body{
 }.clock{
     font-size: 10vmin;
 }.showcase{
-    background-color: ;
     text-align: center;
     width: 60%;
     margin: auto;
     margin-top: 10%;
-    padding: ;
 }.staffbod{
    
+}.btn-lg{
+    font-size: 2.5vmin;
 }
