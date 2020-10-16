@@ -23,3 +23,7 @@ class User(models.Model):
         ADMINISTRATOR = 'adminstrator', 'Adminstrator'
 
     role = models.CharField(max_length=12, choices=Roles.choices, default=Roles.STAFF)
+    image = models.ImageField(upload_to='users/images/', default='default.png')
+
+    def __str__(self):
+        return self.name

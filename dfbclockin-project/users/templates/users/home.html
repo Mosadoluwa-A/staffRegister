@@ -1,0 +1,86 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+<!-- <div class="card" style="width: 1rem;">
+  <img src="media/avatar.png" class="card-img-top avatar" height="" width="35" alt="user  Image">
+  <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div> -->
+
+    <div class="showcase p-4 shadow-lg rounded">
+      <div id="MyClockDisplay" class="clock " onload="showTime()"></div>
+      <div id="date" class="date "> </div>
+      <div class="buttons ">
+        <button type="button" class="btn btn-primary btn-lg m-4 " data-toggle="modal" data-target="#clockin">Clock In</button>
+        <!-- Button trigger modal -->
+          <!-- Modal -->
+          <div class="modal fade" id="clockin" tabindex="-1" role="dialog" aria-labelledby="clockin" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-body">
+                  Are You Sure
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <form method="POST"> 
+                    <button type="submit" class="btn btn-primary">Clock In</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <form method="POST">
+            <button type="submit" class="btn btn-danger btn-lg m-4">Clock Out</button>
+        </form>
+      </div>
+
+    </div>
+
+    {% endblock %}
+    
+    
+
+    <!-- Optional JavaScript -->
+    <script>
+        function showTime(){
+    var date = new Date();
+    var today = date.getDate();
+    month = date.toLocaleString('default', {month: 'long'});
+    var year = date.getFullYear();
+    var h = date.getHours();
+    var m = date.getMinutes(); 
+    var s = date.getSeconds(); 
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    var day = `${today} ${month} ${year}.`;
+    document.getElementById("MyClockDisplay").innerText = time;
+    document.getElementById("date").textContent = day;
+    
+    setTimeout(showTime, 1000);
+    
+}
+
+showTime();
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
