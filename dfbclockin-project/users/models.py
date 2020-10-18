@@ -1,14 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User, AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
-class User(models.Model):
-    name = models.CharField(max_length=25)
-    username = models.CharField(max_length=12)
-    password = models.CharField(max_length=255)
-    email = models.CharField(max_length=50)
+class User(AbstractUser):
 
     class Departments(models.TextChoices):
-        NOT_SELECTED = ""
         ADMIN = "admin", "Admin"
         FINANCE = "finance", "Finance"
         PROGRAM = "program", "Program"
@@ -16,7 +13,7 @@ class User(models.Model):
         COMMUNICATIONS = "communications", "Communications"
         IT = "it", "IT"
 
-    department = models.CharField(max_length=20, choices=Departments.choices, default=Departments.NOT_SELECTED)
+    department = models.CharField(max_length=20, choices=Departments.choices)
 
     class Roles(models.TextChoices):
         STAFF = "staff", "Staff"
@@ -25,5 +22,7 @@ class User(models.Model):
     role = models.CharField(max_length=12, choices=Roles.choices, default=Roles.STAFF)
     image = models.ImageField(upload_to='users/images/', default='default.png')
 
+    REQUIRED_FIELDS = ['email', 'department']
+
     def __str__(self):
-        return self.name
+        return self.username

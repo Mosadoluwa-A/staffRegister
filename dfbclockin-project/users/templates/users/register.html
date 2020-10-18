@@ -11,14 +11,17 @@
         <form class="col align-self-center p-3 pl-5 pr-5 col-lg-6 mt-5 shadow-lg rounded" method="POST">
             {% csrf_token %}
             <div class="form-group">
-            <input type="text" class="form-control border-danger mt-3 mb-2" name="name" id="Name" required autofocus placeholder="Name">
+            <input type="text" class="form-control border-danger mt-3 mb-2" name="first_name" id="Name" required autofocus placeholder="First Name">
             </div>
+            <div class="form-group">
+              <input type="text" class="form-control border-danger mt-3 mb-2" name="last_name" id="Name" required autofocus placeholder="Last Name">
+              </div>
             <div class="form-group">
             <input type="email" class="form-control border-danger mt-1 mb-2" name="email" id="Email" required placeholder="Email">
             </div>
             <div class="form-group">
               <label for="depts">Departments</label>
-              <select class="form-control" id="depts">
+              <select class="form-control" name="department" id="depts">
                 {% for department in departments %}
                 <option value="{{ department.name }}">{{ department.name }}</option>
                 {% endfor %}
@@ -26,7 +29,7 @@
             </div>
             <div class="form-group">
               <label for="role">Role</label>
-              <select class="form-control" id="role">
+              <select class="form-control" name="role" id="role">
                 <option value="staff">Staff</option>
                 <option value="administrator">Administrator</option>
               </select>
@@ -42,7 +45,7 @@
                 </div>
             <div class="form-group">
                 <label for="userimg">Image</label>
-                <input type="file" class="form-control-file" id="userimg">
+                <input type="file" name="image" class="form-control-file" id="userimg">
             </div>
             <button type="submit" class="btn btn-danger btn-block mb-5">Register</button>
         </form>

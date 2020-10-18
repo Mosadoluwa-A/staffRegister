@@ -9,11 +9,15 @@
   </div>
 </div> -->
 
+  <h3 style="color: green;">{{ msg }}</h3>
+  <h3 style="color: red;">{{ error }}</h3>
+
+
     <div class="showcase p-4 shadow-lg rounded">
       <div id="MyClockDisplay" class="clock " onload="showTime()"></div>
       <div id="date" class="date "> </div>
       <div class="buttons ">
-        <button type="button" class="btn btn-primary btn-lg m-4 " data-toggle="modal" data-target="#clockin">Clock In</button>
+        <button type="button" class="btn btn-primary btn-lg m-4 " data-toggle="modal" data-target="#clockin" onclick="putTime()">Clock In</button>
         <!-- Button trigger modal -->
           <!-- Modal -->
           <div class="modal fade" id="clockin" tabindex="-1" role="dialog" aria-labelledby="clockin" aria-hidden="true">
@@ -24,7 +28,10 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <form method="POST"> 
+                  <form method="POST" action="{% url 'clockin:clock_in' %}" >
+                      {% csrf_token %} 
+                      <input type="text" id="time_in" name="time_in">
+                      <input type="text" id="name" name="name">
                     <button type="submit" class="btn btn-primary">Clock In</button>
                   </form>
                 </div>
@@ -32,6 +39,7 @@
             </div>
           </div>
           <form method="POST">
+            {% csrf_token %} 
             <button type="submit" class="btn btn-danger btn-lg m-4">Clock Out</button>
         </form>
       </div>
@@ -77,10 +85,41 @@
 }
 
 showTime();
+
+function changeTime(){
+    
+    var date = new Date();
+    var today = date.getDate();
+    month = date.toLocaleString('default', {month: 'long'});
+    var year = date.getFullYear();
+    var h = date.getHours();
+    var m = date.getMinutes(); 
+    var s = date.getSeconds(); 
+    var session = "AM";
+    
+    if(h == 0){
+        h = 12;
+    }
+    
+    if(h > 12){
+        h = h - 12;
+        session = "PM";
+    }
+    
+    h = (h < 10) ? "0" + h : h;
+    m = (m < 10) ? "0" + m : m;
+    s = (s < 10) ? "0" + s : s;
+    
+    var time = h + ":" + m + ":" + s + " " + session;
+    document.getElementById("time").value = time;
+
+    console.log(time)
+}
     </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="{static 'users/app.js'}"></script>
   </body>
 </html>
