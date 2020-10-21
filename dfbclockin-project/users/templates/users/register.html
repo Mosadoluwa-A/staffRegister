@@ -3,8 +3,10 @@
 
 {% block content %}
 
-<p style="color: green;">{{ msg }}</p>
+<p style="color: green;">{{ dept }}</p>
+<p style="color: green;">{{ role }}</p>
 <p style="color: red;">{{ error }}</p>
+
 
     <div class="container-fluid col col-10 col-sm-8 col-md-6 col-lg-6 login d-flex justify-content-center">
         
@@ -28,12 +30,18 @@
               </select>
             </div>
             <div class="form-group">
+              <input type="text" class="form-control border-danger mt-3 mb-2" name="dept" id="dept" required autofocus placeholder="Department_2">
+              </div>
+            <div class="form-group">
               <label for="role">Role</label>
               <select class="form-control" name="role" id="role">
                 <option value="staff">Staff</option>
                 <option value="administrator">Administrator</option>
               </select>
             </div>
+            <div class="form-group">
+              <input type="text" class="form-control border-danger mt-3 mb-2" name="role_2" id="role_2" required autofocus placeholder="Role_2">
+              </div>
             <div class="form-group">
               <input type="text" class="form-control border-danger mt-3 mb-2" name="username" id="username" required autofocus placeholder="Username">
               </div>

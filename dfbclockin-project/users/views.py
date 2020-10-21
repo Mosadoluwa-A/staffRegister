@@ -7,7 +7,9 @@ from department.models import Department
 
 
 def home(request):
-    return render(request, 'users/home.html')
+    name = request.session['name']
+    role = request.session['role']
+    return render(request, 'users/home.html', {'name': name, 'role': role})
 
 
 def home_msg(request, msg):
@@ -20,7 +22,6 @@ def home_error(request, error):
 
 def login_user(request):
     user_model = get_user_model()
-    user_log = user_model.objects.all()
     if request.method == "GET":
         return render(request, 'users/index.html')
     else:
@@ -30,7 +31,10 @@ def login_user(request):
             return render(request, {'error': 'Sorry username and passwords did not match'})
         else:
             login(request, user)
+            request.session['name'] = user.get_full_name()
+            request.session['role'] = user.role
             print("session user{}".format(request.user))
+            print("session user department is {}".format(user.department))
             return redirect(reverse(home))
 
 
@@ -59,6 +63,8 @@ def register_user(request):
                 user.image = image
                 user.save()
                 login(request, user)
+                request.session['name'] = user.get_full_name()
+                request.session['role'] = user.role
                 return redirect(home)
             except IntegrityError:
                 return render(request, 'users/register.html', {'error': 'The username has been taken please pick a different one'})
