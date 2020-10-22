@@ -35,15 +35,15 @@
                       {% csrf_token %} 
                       <input type="text" id="time_in" name="time_in">
                       <input type="text" id="name" name="name">
-                    <button type="submit" class="btn btn-primary">Clock In</button>
+                    <button type="submit" class="btn btn-primary" onclick="disableClockin()" >Clock In</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-          <form method="POST">
+          <form method="POST" action="{% url 'clockin:clock_out' %}">
             {% csrf_token %} 
-            <button type="submit" class="btn btn-danger btn-lg m-4">Clock Out</button>
+            <button type="submit" id="clockout" class="btn btn-danger btn-lg m-4" onclick="disableClockout()">Clock Out</button>
         </form>
       </div>
 

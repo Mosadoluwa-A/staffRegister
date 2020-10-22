@@ -72,3 +72,11 @@ function putTime(){
 }
 
 putTime();
+
+function disableClockin(){
+    document.getElementById('clockin').disabled = true
+}
+
+function disableClockout(){
+    document.getElementById('clockout').disabled = true
+}
