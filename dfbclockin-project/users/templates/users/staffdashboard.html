@@ -1,0 +1,39 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5 col-bg-6">
+  {% if admin %} 
+    
+    <h1>{{ name }} has clocked in {{ clockins.count }} time{{ clockins.count|pluralize }} </h1>
+
+  {% else %}
+  
+    <h1>You have clocked in {{ clockins.count }} time{{ clockins.count|pluralize }} </h1>
+
+  {% endif %}
+    <table class="table table-striped table-sm table-bordered col-bg-6">
+        <thead class="bg-danger text-light">
+          <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time In</th>
+            <th scope="col">Time Out</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for clockin in clockins %}
+          <tr class="table-success">
+            <th scope="row">1</th>
+            <td>{{ clockin.name }}</td>
+            <td>{{ clockin.time_in }}</td>
+            <td>{{ clockin.time_out }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+{% endblock %}
+
+    

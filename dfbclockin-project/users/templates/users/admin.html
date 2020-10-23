@@ -5,7 +5,7 @@
             <div class="container mt-5">
                 <div class="card-deck container">
                     {% for user in users %}
-                    <a href="#">
+                    <a href="{% url 'user_clockins' user.id %}">
                     <div class="card center rounded">
                     <img class="card-img-top" src="{{ user.image.url }}" alt="Card image cap" style="width: 10rem;" >
                     <div class="card-footer">

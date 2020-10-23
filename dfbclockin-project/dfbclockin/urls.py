@@ -28,6 +28,8 @@ urlpatterns = [
     path('home/', views.home, name='home'),
     path('home/<str:msg>', views.home_msg, name='homemsg'),
     path('home/<str:error>', views.home_error, name='home_error'),
+    path('admin_clockin/', views.admin_clockin, name='admin_clockin'),
+    path('users/clockins/<int:user_id>', views.user_clockins, name='user_clockins'),
     #CLOCKIN
     path('clockin/', include('clockin.urls')),
 ]
