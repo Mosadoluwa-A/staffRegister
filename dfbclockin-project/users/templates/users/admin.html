@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+                   
+            <div class="container mt-5">
+                <div class="card-deck container">
+                    {% for user in users %}
+                    <a href="#">
+                    <div class="card center rounded">
+                    <img class="card-img-top" src="{{ user.image.url }}" alt="Card image cap" style="width: 10rem;" >
+                    <div class="card-footer">
+                        <a href="#" class="staffname"><h5 class="card-title">{{ user.get_full_name }}</h5></a>
+                        <p class="card-text">{{ user.department }}</p>
+                    </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+{% endblock %}

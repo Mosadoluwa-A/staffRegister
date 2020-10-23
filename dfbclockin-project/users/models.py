@@ -14,26 +14,26 @@ class User(AbstractUser):
     #     IT = "it", "IT"
 
     DEPARTMENTS = (
-        ("admin", "Admin"),
-        ("finance", "Finance"),
-        ("program", "Program"),
-        ("m&e", "M&E"),
-        ("communications", "Communications"),
-        ("it", "IT"),
+        ("Admin", "Admin"),
+        ("Finance", "Finance"),
+        ("Program", "Program"),
+        ("M&E", "M&E"),
+        ("Communications", "Communications"),
+        ("IT", "IT"),
     )
 
     department = models.CharField(max_length=20, choices=DEPARTMENTS)
 
     # class Roles(models.TextChoices):
     #     STAFF = "staff", "Staff"
-    #     ADMINISTRATOR = 'adminstrator', 'Adminstrator'
+    #     ADMINISTRATOR = 'administrator', 'Administrator'
 
     ROLES = (
         ("staff", "Staff"),
-        ('adminstrator', 'Adminstrator'),
+        ('administrator', 'Administrator'),
     )
 
-    role = models.CharField(max_length=12, choices=ROLES, default=ROLES[0])
+    role = models.CharField(max_length=13, choices=ROLES, default=ROLES[0])
     image = models.ImageField(upload_to='users/images/', default='default.png')
 
     REQUIRED_FIELDS = ['email', 'department']

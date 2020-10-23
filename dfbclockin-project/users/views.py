@@ -9,6 +9,11 @@ from department.models import Department
 def home(request):
     name = request.session['name']
     role = request.session['role']
+    if role == 'administrator':
+        User = get_user_model()
+        users = User.objects.all()
+        admin = request.session['role']
+        return render(request, 'users/admin.html', {'users': users, 'admin': admin, 'name': name})
     return render(request, 'users/home.html', {'name': name, 'role': role})
 
 
@@ -21,7 +26,7 @@ def home_error(request, error):
 
 
 def login_user(request):
-    user_model = get_user_model()
+    # user_model = get_user_model()
     if request.method == "GET":
         return render(request, 'users/index.html')
     else:
@@ -46,6 +51,8 @@ def register_user(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user_model = get_user_model()
+                files = request.FILES
+                image = files.get("image")
                 username = request.POST['username']
                 password = request.POST['password1']
                 fname = request.POST['first_name']
@@ -53,7 +60,6 @@ def register_user(request):
                 email = request.POST['email']
                 department = request.POST['department']
                 role = request.POST['role']
-                image = request.POST['image']
                 user = user_model.objects.create_user(username, password=password)
                 user.first_name = fname
                 user.last_name = lname
