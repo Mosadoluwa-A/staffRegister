@@ -1,7 +1,8 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-                   
+<h3 style="color: green;">{{ msg }}</h3>
+<h3 style="color: red;">{{ error }}</h3>                   
             <div class="container mt-5">
                 <div class="card-deck container">
                     {% for user in users %}

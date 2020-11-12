@@ -5,6 +5,8 @@ from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.urls import reverse
 from department.models import Department
 from clockin.models import Clockin
+from day.models import Day
+from datetime import date
 
 # CLOCKIN
 
@@ -42,11 +44,27 @@ def user_clockins(request, user_id):
 
 
 def home_msg(request, msg):
-    return render(request, 'users/home.html', {'msg': msg})
+    User = get_user_model()
+    name = request.session['name']
+    role = request.session['role']
+    user_id = request.session['user_id']
+    if role == 'administrator':
+        users = User.objects.all()
+        admin = request.session['role']
+        return render(request, 'users/admin.html', {'users': users, 'admin': admin, 'name': name, 'user_id': user_id, 'msg': msg})
+    return render(request, 'users/home.html', {'name': name, 'role': role, 'user_id': user_id, 'msg': msg})
 
 
 def home_error(request, error):
-    return render(request, 'users/home.html', {'error': error})
+    User = get_user_model()
+    name = request.session['name']
+    role = request.session['role']
+    user_id = request.session['user_id']
+    if role == 'administrator':
+        users = User.objects.all()
+        admin = request.session['role']
+        return render(request, 'users/admin.html', {'users': users, 'admin': admin, 'name': name, 'user_id': user_id, 'error': error})
+    return render(request, 'users/home.html', {'name': name, 'role': role, 'user_id': user_id, 'error': error})
 
 
 # AUTHENTICATION

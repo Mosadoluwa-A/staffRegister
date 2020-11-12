@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'clockin',
     'department',
+    'day.apps.DayConfig',
 ]
 
 MIDDLEWARE = [
