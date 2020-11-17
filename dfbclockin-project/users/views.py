@@ -115,7 +115,7 @@ def register_user(request):
                 user.save()
                 login(request, user)
                 request.session['name'] = user.get_full_name()
-                request.session['id'] = user.id
+                request.session['user_id'] = user.id
                 request.session['role'] = user.role
                 return redirect(home)
             except IntegrityError:

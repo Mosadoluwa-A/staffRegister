@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from .models import Day
 
-# Create your views here.
+
+def all_days(request):
+    days = Day.objects.all()
+    return render(request, 'day/days.html', {'days': days})
+
+

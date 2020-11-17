@@ -32,6 +32,9 @@ urlpatterns = [
     path('users/clockins/<int:user_id>', views.user_clockins, name='user_clockins'),
     #CLOCKIN
     path('clockin/', include('clockin.urls')),
+
+    #Days
+    path('day/', include('day.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
