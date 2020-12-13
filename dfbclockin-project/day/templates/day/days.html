@@ -20,8 +20,8 @@
 
           <tr>
             
-            <th scope="row">1</th>
-            <td><a href="#">{{ day.name }}</a></td>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{% url 'attendance' day.id %}">{{ day.name }}</a></td>
             <td>{{ day.clockins.all.count }}</td>
             <td>{{ day.clockins.get_punctual.count }}</td>
             <td>{{ day.clockins.get_late.count }}</td>

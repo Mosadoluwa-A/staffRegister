@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from users import views
+from day.views import attendance
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,7 +35,8 @@ urlpatterns = [
     path('clockin/', include('clockin.urls')),
 
     #Days
-    path('day/', include('day.urls')),
+    path('day/', include('day.urls', namespace='days')),
+    path('day/attendance/<int:day_id>', attendance, name='attendance'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

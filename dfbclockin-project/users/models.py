@@ -36,6 +36,7 @@ class User(AbstractUser):
     role = models.CharField(max_length=13, choices=ROLES, default=ROLES[0])
     image = models.ImageField(upload_to='users/images/', default='default.png')
 
+
     REQUIRED_FIELDS = ['email', 'department']
 
     def __str__(self):
