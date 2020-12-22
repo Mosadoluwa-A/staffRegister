@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from users import views
-from day.views import attendance
+from day.views import attendance, absentees, absent_days, add_absent_staff
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +37,9 @@ urlpatterns = [
     #Days
     path('day/', include('day.urls', namespace='days')),
     path('day/attendance/<int:day_id>', attendance, name='attendance'),
+    path('day/absentees/<int:day_id>', absentees, name='absentees'),
+    path('absent_days/', absent_days, name='absent_days'),
+    path('absent_days/absent_staff/', add_absent_staff, name='absent_staff')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

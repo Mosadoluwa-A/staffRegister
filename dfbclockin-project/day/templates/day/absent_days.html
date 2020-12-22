@@ -1,0 +1,35 @@
+
+{% extends 'users/base.html' %}
+{% block content %}
+
+<div class="container mt-5 col-bg-6">
+    <header class="text-center"> 
+        <h1 class="h3 display">All days and Absent Staff</h1>
+        <a href="{% url 'absent_staff' %}"><button class="btn btn-secondary btn-lg mt-3 mb-3"> <strong>Add Absent</strong></button></a>
+    </header>
+    <table class="table table-striped table-sm table-bordered col-bg-6">
+        <thead class="bg-danger text-light">
+          <tr>
+            <th scope="col">S/N</th>
+            <th scope="col">Date</th>
+            <th scope="col">Staff Absent</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for day in days %}
+          <tr>
+            
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="{% url 'absentees' day.id %}">{{ day.name }}</a></td>
+            <td>{{ day.absents.all.count }}</td>
+          </tr>
+        {% endfor %}
+          
+        </tbody>
+      </table>
+    </div>
+
+    {% endblock %}
+
+    
+    

@@ -50,6 +50,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'days:all_days' %}">Days</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'days:absent_days' %}">Absent</a>
+          </li>
 
           {% endif %}
           <li class="nav-item">
@@ -80,7 +83,9 @@
         </div>
     
     {% endblock %}
-
+    <footer class="bg-danger text-center p-1 mt-5 text-white">
+      <p class="mt-3"> &copy; Copyright Damien Foundation 2020</p>
+    </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

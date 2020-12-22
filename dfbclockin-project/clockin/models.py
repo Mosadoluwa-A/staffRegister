@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from day.models import Day
-# from users.models import User
+from users.models import User
 
 
 class PunctualManager(models.Manager):
@@ -63,3 +63,13 @@ class Clockin(models.Model):
             self.slug = self.make_slug()
             self.time_status = self.punc_stat()
         super().save(*args, **kwargs)
+
+
+today = datetime.today().strftime("%d %B, %Y")
+
+
+class Absent(models.Model):
+    name = models.CharField(max_length=50, default=today)
+    staff = models.ForeignKey(User, on_delete=models.CASCADE, related_name="absents")
+    day = models.ForeignKey(Day, null=True, on_delete=models.SET_NULL, related_name="absents")
+    reason = models.TextField(blank=True, default="None")
