@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from department.models import Department
 from clockin.models import Clockin
@@ -10,7 +12,10 @@ from datetime import date
 
 # CLOCKIN
 
+# This is for the homepage of all users
 
+
+@login_required(login_url='/')
 def home(request):
     User = get_user_model()
     name = request.session['name']
@@ -18,19 +23,26 @@ def home(request):
     user_id = request.session['user_id']
     if role == 'administrator':
         users = User.objects.all()
-        admin = request.session['role']
+        admin = request.session['role']  # This is to determine the navbar
         return render(request, 'users/admin.html', {'users': users, 'admin': admin, 'name': name, 'user_id': user_id})
     return render(request, 'users/home.html', {'name': name, 'role': role, 'user_id': user_id})
 
+# This is the clockin homepage for the admins
 
+
+@login_required(login_url='/')
 def admin_clockin(request):
     name = request.session['name']
     role = request.session['role']
     admin = request.session['role']
     if role == 'administrator':
         return render(request, 'users/home.html', {'name': name, 'role': role, 'admin': admin})
+    else:
+        messages.error(request, "You do not have permission to view the page")
+        return redirect(home)
 
 
+@login_required(login_url='/')
 def user_clockins(request, user_id):
     User = get_user_model()
     user = get_object_or_404(User, pk=user_id)
@@ -38,11 +50,12 @@ def user_clockins(request, user_id):
     role = request.session['role']
     clockin = Clockin.objects.filter(user=user_id).order_by('created')
     if role == 'administrator':
-        admin = request.session['role']
+        admin = request.session['role']  # This to determine the navbar
         return render(request, 'users/staffdashboard.html', {'clockins': clockin, 'name': name, 'admin': admin, 'user_id': user_id})
     return render(request, 'users/staffdashboard.html', {'clockins': clockin, 'name': name, 'user_id': user_id})
 
 
+@login_required(login_url='/')
 def home_msg(request, msg):
     User = get_user_model()
     name = request.session['name']
@@ -55,6 +68,7 @@ def home_msg(request, msg):
     return render(request, 'users/home.html', {'name': name, 'role': role, 'user_id': user_id, 'msg': msg})
 
 
+@login_required(login_url='/')
 def home_error(request, error):
     User = get_user_model()
     name = request.session['name']
@@ -74,17 +88,15 @@ def login_user(request):
         return render(request, 'users/index.html')
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        print("user is {}".format(user.username))
         if user is None:
-            return render(request, {'error': 'Sorry username and passwords did not match'})
+            messages.error(request, "Sorry username and passwords did not match")
+            return render(request, 'users/index.html')
         else:
             login(request, user)
+            messages.success(request, "Login Success")
             request.session['name'] = user.get_full_name()
             request.session['user_id'] = user.id
             request.session['role'] = user.role
-            print("session user{}".format(request.user))
-            print("session user id is {}".format(request.session['user_id']))
-            print("session user department is {}".format(user.department))
             return redirect(reverse(home))
 
 
@@ -119,10 +131,11 @@ def register_user(request):
                 request.session['role'] = user.role
                 return redirect(home)
             except IntegrityError:
-                return render(request, 'users/register.html',
-                              {'error': 'The username has been taken please pick a different one'})
+                messages.error(request, "The username has been taken please pick a different one")
+                return render(request, 'users/register.html', {'departments': departments})
         else:
-            return render(request, 'users/register.html', {'error': 'Sorry your passwords did not match'})
+            messages.error(request, "Your passwords did not match")
+            return render(request, 'users/register.html', {'departments': departments})
 
 
 def logout_user(request):

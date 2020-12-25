@@ -3,6 +3,19 @@
 
 {% block content %}
 
+{% if messages %}
+            <ul class="messages">
+              {% for message in messages %}
+              <div class="alert {% if message.success %} alert-success {% else %} alert-danger {% endif %} {{ message.tags }} alert-dismissible w-25 mt-2" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  {{ message | safe }}
+              </div>
+              {% endfor %}
+            </ul>
+      {% endif %}
+
 <p style="color: green;">{{ dept }}</p>
 <p style="color: green;">{{ role }}</p>
 <p style="color: red;">{{ error }}</p>
